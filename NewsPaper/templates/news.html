@@ -1,0 +1,33 @@
+{% extends 'flatpages/default.html' %}
+
+{% load my_filters %}
+
+{% block title %}
+Новость
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ news.title|censor }}</h1>
+
+    {% if category %}
+        {% load account %}
+
+        <h5>
+        {% for c in category %}
+            <div>
+                <a href="{% url 'category' c.category %}">{{ c.category__category }}</a>
+                {% if user.is_authenticated %}
+                    {% if c.category not in subscribed %}
+                        | <button><a href="{% url 'subscribe_category' c.category %}">Подписаться</a></button>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        </h5>
+    {% endif %}
+
+    <h6>{{ news.created_data|date:'d.m.Y G:i' }}</h6>
+    <p>{{ news.text|censor }}</p>
+    <h6>Автор: {{ author_name }}</h6>
+    <hr>
+{% endblock content %}

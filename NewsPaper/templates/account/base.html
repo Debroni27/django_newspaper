@@ -1,0 +1,20 @@
+{% extends 'flatpages/default.html' %}
+  {% block head_title %}{% endblock %}
+    {% block extra_head %}
+    {% endblock %}
+
+    {% block body %}
+
+    {% if messages %}
+    <div>
+      {% for message in messages %}
+      <p>{{message}}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}

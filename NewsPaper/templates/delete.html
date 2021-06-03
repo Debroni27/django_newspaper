@@ -1,0 +1,42 @@
+{% extends 'flatpages/default.html' %}
+
+{% load my_filters %}
+
+{% block title %}
+Удаление статьи
+{% endblock title %}
+
+{% block content %}
+    <h1>Удалить статью?</h1>
+    <hr>
+    <table>
+        <thead>
+          <tr>
+              <td>
+                  Заголовок
+              </td>
+              <td>
+                  Дата публикации
+              </td>
+              <td>
+                  Новость
+              </td>
+          </tr>
+        </thead>
+        <tr>
+            <td>
+                {{ post.title|censor }}
+            </td>
+            <td>
+                {{ post.created_data|date:'d.m.Y' }}
+            </td>
+            <td>
+                {{ post.text|truncatechars:50|censor }}
+            </td>
+        </tr>
+    </table>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="подтвердить">
+    </form>
+{% endblock content %}

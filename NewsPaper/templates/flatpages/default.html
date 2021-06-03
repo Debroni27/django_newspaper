@@ -1,0 +1,77 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Django flatpages — {% block title %} {% endblock title %}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Django flatpages</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link"  href="/news/">Главная</a>
+              <span class="sr-only">(current)</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/news/search/">Поиск</a>
+              <span class="sr-only">(current)</span>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/news/add/">Добавить</a>
+              <span class="sr-only">(current)</span>
+          </li>
+        </ul>
+      </div>
+        <div class="collapse navbar-collapse" id="navbarResponsive1">
+                    {% load account %}
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                        <li><div class="nav-link py-3 px-0 px-lg-3 rounded">{% user_display user %}</div></li>
+                        <li><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'account_logout' %}">Sign Out</a></li>
+                        {% comment %} <li>{% if is_not_author %}<button> <a href="/news/setauthor/">Стать автором</a></button>{% endif %}</li> {% endcomment %}
+                        {% else %}
+                        <li><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'account_login' %}">Sign In</a></li>
+                        <li><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'account_signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+       {% block content %}
+
+       {% endblock content %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.slim.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>

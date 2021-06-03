@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% load my_filters %}
+
+{% block title %}
+Создание/редакция статьи статьи
+{% endblock title %}
+
+{% block content %}
+    <h1>Добавить/изменить</h1>
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Добавить статью">
+    </form>
+{% endblock content %}
