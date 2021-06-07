@@ -13,6 +13,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 
+from django.core.cache import cache
 
 
 class NewsList(ListView):
@@ -50,6 +51,13 @@ class NewsDetail(DetailView):
     model = Post
     template_name = 'news.html'
     context_object_name = 'news'
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+        if not obj:
+            obj = super().get_object(*args, **kwargs)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

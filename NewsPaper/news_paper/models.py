@@ -1,6 +1,8 @@
 from django.db import models
 import django.contrib.auth
 
+from django.core.cache import cache
+
 
 class Author(models.Model):
     user_id = models.OneToOneField(django.contrib.auth.get_user_model(), on_delete=models.CASCADE)
@@ -65,6 +67,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        cache.delete(f'post-{self.pk}')
 
 
 class Comment(models.Model):
